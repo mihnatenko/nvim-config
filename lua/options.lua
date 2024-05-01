@@ -72,3 +72,6 @@ vim.g.netrw_liststyle = 3
 
 -- Set highlight on search
 vim.opt.hlsearch = true
+
+-- Allow loading local per-project configs
+vim.opt.exrc = true
