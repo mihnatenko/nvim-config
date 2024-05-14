@@ -21,6 +21,22 @@ return { -- Autoformat
       -- is found.
       -- javascript = { { "prettierd", "prettier" } },
     },
+    formatters = {
+      stylua = function(_)
+        -- Specify config to use the same formatting local, per-project config files
+        -- as in all config files
+        local path = vim.api.nvim_buf_get_name(0)
+        if path then
+          local name = vim.fs.basename(path)
+          if name == '.nvim.lua' then
+            local stylua_config_path = vim.fn.stdpath 'config' .. '/.stylua.toml'
+            return { prepend_args = { '--config-path', stylua_config_path } }
+          end
+        end
+
+        return nil
+      end,
+    },
   },
 }
 

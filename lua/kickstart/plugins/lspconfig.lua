@@ -13,7 +13,22 @@ return { -- LSP Configuration & Plugins
 
     -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
     -- used for completion, annotations and signatures of Neovim apis
-    { 'folke/neodev.nvim', opts = {} },
+    {
+      'folke/neodev.nvim',
+      opts = {
+        -- Add neodev support to local, per-project config files
+        override = function(_, library)
+          local path = vim.api.nvim_buf_get_name(0)
+          if path then
+            local name = vim.fs.basename(path)
+            if name == '.nvim.lua' then
+              library.enabled = true
+              library.plugins = true
+            end
+          end
+        end,
+      },
+    },
   },
   config = function()
     -- Brief Aside: **What is LSP?**
