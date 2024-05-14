@@ -1,6 +1,9 @@
 return { -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
+  dependencies = {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+  },
   opts = {
     ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc' },
     -- Autoinstall languages that are not installed
@@ -13,6 +16,30 @@ return { -- Highlight, edit, and navigate code
       additional_vim_regex_highlighting = { 'ruby' },
     },
     indent = { enable = true, disable = { 'ruby' } },
+    textobjects = {
+      select = {
+        enable = true,
+        lookahead = true,
+        keymaps = {
+          ['if'] = { query = '@function.inner', desc = 'inner part of a function' },
+          ['af'] = { query = '@function.outer', desc = 'outer part of a function' },
+          ['ic'] = { query = '@class.inner', desc = 'inner part of a class' },
+          ['ac'] = { query = '@class.outer', desc = 'outer part of a class' },
+          ['il'] = { query = '@loop.inner', desc = 'inner part of a loop' },
+          ['al'] = { query = '@loop.outer', desc = 'outer part of a loop' },
+        },
+      },
+      swap = {
+        -- not sure I will use it, but will see
+        enable = true,
+        swap_next = {
+          ['<leader>cs'] = { query = '@parameter.inner', desc = '[C]ode: [S]wap with next parameter' },
+        },
+        swap_previous = {
+          ['<leader>cS'] = { query = '@parameter.inner', desc = '[C]ode: [S]wap with previous parameter' },
+        },
+      },
+    },
   },
   config = function(_, opts)
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
