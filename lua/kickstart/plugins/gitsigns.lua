@@ -29,6 +29,11 @@ return { -- Adds git related signs to the gutter, as well as utilities for manag
       -- TODO: maybe it would make sense to modify descriptions to make `which-key` prettieer?
       map('n', '<leader>hp', gs.preview_hunk, 'Preview hunk')
       map('n', '<leader>hr', gs.reset_hunk, 'Reset hunk')
+      map('n', '<leader>hs', gs.stage_hunk, 'Stage hunk')
+      -- TODO: does not seem to be working. Need to figure out why
+      map('v', '<leader>hs', function()
+        gs.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
+      end, 'Stage hunk')
       map('n', '<leader>hb', gs.blame_line, 'Blame line')
       map('n', '<leader>hB', function()
         gs.blame_line { full = true }
